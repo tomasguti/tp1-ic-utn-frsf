@@ -94,7 +94,7 @@ public class Main {
 			beneficio = 0; 
 		}
 		
-		return beneficio;
+		return beneficio/peso;
 	}
 
 }
