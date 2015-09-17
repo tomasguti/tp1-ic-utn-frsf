@@ -4,8 +4,9 @@ public class Main {
 
 	public static int PESO_MAXIMO = 70;
 	public static int LONGITUD_CROMOSOMA = 10;
+	public static int TAMAÑO_POBLACION = 20;
 	
-	public static int PUNTO_DE_CORTE = 999;
+	public static int PUNTO_DE_CORTE = 999;	
 	
 	public static int[] pesos;
 	public static int[] beneficios;
@@ -94,7 +95,49 @@ public class Main {
 			beneficio = 0; 
 		}
 		
-		return beneficio/peso;
+		return beneficio/(1 + peso); // ver si sirve de esta forma
 	}
-
+	
+	public static int[] seleccionMetodoRuleta(boolean[][] poblacion){ // devuelve un arreglo con los indices de los cromosomas en el orden en que se seleccionaron
+		
+		int[] seleccion = new int[TAMAÑO_POBLACION];
+		
+		float[] performances = new float[TAMAÑO_POBLACION];		
+		float performanceTotal = 0;
+		
+		float[] pi = new float[TAMAÑO_POBLACION];
+		float[] qi = new float[TAMAÑO_POBLACION];
+		
+		float aux;
+		double r;
+		
+		for(int i=0; i < TAMAÑO_POBLACION; i++){ // calcula los fitness individuales y el total
+			aux = performance(poblacion[i]);
+			performances[i] = aux;
+			performanceTotal += aux;
+		}
+		
+		aux = 0;
+		
+		for(int i=0; i < TAMAÑO_POBLACION; i++){ // calcula los p y q
+			pi[i] = performances[i]/performanceTotal;
+			aux += pi[i];
+			qi[i] = aux;
+		}
+		
+		for(int i=0; i < TAMAÑO_POBLACION; i++){ // selecciona los cromosomas
+			r = Math.random();
+			
+			for(int j=0; j < TAMAÑO_POBLACION; j++){
+				if(r > qi[j]){
+					seleccion[i] = j - 1;
+					j=TAMAÑO_POBLACION;
+				}
+			}			
+		}		
+		
+		return seleccion;
+	}
+	
+	
 }
