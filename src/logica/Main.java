@@ -139,5 +139,35 @@ public class Main {
 		return seleccion;
 	}
 	
+public static int[] seleccionVentana(boolean[][] poblacion){ // devuelve un arreglo con los indices de los cromosomas en el orden en que se seleccionaron
+		
+		int[] seleccion = new int[TAMAÑO_POBLACION];
+		int[] ordenados = new int[TAMAÑO_POBLACION];
+		float[] performances = new float[TAMAÑO_POBLACION];
+				
+		int aux;
+		double r;
+		
+		for(int i=0; i < TAMAÑO_POBLACION; i++){ // calcula los fitness individuales
+			performances[i] = performance(poblacion[i]);
+		}
+		
+		for(int i=0; i < TAMAÑO_POBLACION; i++){ // ordena los indices de los cromosomas según el fitness de cada uno
+			aux = 0;
+			for(int j=0; j < TAMAÑO_POBLACION; j++){
+				if(performances[j] > performances[aux])
+					aux = j;
+			}
+			ordenados[i] = aux;
+			performances[aux] = 0;
+		}
+		
+		for(int i=0; i < TAMAÑO_POBLACION; i++){ // selecciona los cromosomas
+			r = Math.floor(Math.random()*(i + 1));			
+			seleccion[i] = ordenados[(int) r];
+		}		
+		
+		return seleccion;
+	}
 	
 }
