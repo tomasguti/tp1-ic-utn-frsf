@@ -129,8 +129,8 @@ public class Main {
 			r = Math.random();
 			
 			for(int j=0; j < TAMAÑO_POBLACION; j++){
-				if(r > qi[j]){
-					seleccion[i] = j - 1;
+				if(r <= qi[j]){
+					seleccion[i] = j;
 					j=TAMAÑO_POBLACION;
 				}
 			}			
