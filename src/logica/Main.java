@@ -40,7 +40,7 @@ public class Main {
 		for(int i=0; i < TAMAÑO_POBLACION; i++){
 			//generar(true) partimos de soluciones factibles (acelera la convergencia).
 			//generar(false) partimos de cromosomas aleatorios
-			poblacion[i] = generar(true);
+			poblacion[i] = generar(false);
 		}
 		
 		//Hasta llegar a un número predefinido de iteraciones.
@@ -56,8 +56,8 @@ public class Main {
 			//A veces el REEMPLAZO_GENERACIONAL degenera las soluciones para corridas largas.
 			
 			if(solucionAlcanzada){
-				System.out.println("Optimo alcanzado en la iteración "+i+" a los "+(System.currentTimeMillis() - milisegundos)+" milisegundos.");
-				break;
+				//System.out.println("Optimo alcanzado en la iteración "+i+" a los "+(System.currentTimeMillis() - milisegundos)+" milisegundos.");
+				//break;
 			}
 		}
 		
@@ -133,9 +133,15 @@ public class Main {
 					poblacion[indicePeor1] = hijo1;
 					poblacion[indicePeor2] = hijo2;
 					
+					j = TAMAÑO_POBLACION; //Romper el bucle externo, no se reemplaza toda la población.
 					break;
 				default:
 					//REEMPLAZO_GENERACIONAL
+					
+					//Funciona mucho mejor si reemplazamos una posición random en vez de siempre los padres.
+					//posicion1 = (int) Math.floor(Math.random()*TAMAÑO_POBLACION);
+					//posicion2 = (int) Math.floor(Math.random()*TAMAÑO_POBLACION);
+					
 					//Reemplazar en la posición que ocupaban en la población anterior.
 					poblacion[posicion1] = hijo1;
 					poblacion[posicion2] = hijo2;
