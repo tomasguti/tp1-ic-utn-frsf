@@ -1,5 +1,7 @@
 package logica;
 
+import java.text.DecimalFormat;
+
 public class Main {
 	
 	public static final int SELECCION_RULETA = 1;
@@ -56,15 +58,16 @@ public class Main {
 			//A veces el REEMPLAZO_GENERACIONAL degenera las soluciones para corridas largas.
 			
 			if(solucionAlcanzada){
-				//System.out.println("Optimo alcanzado en la iteración "+i+" a los "+(System.currentTimeMillis() - milisegundos)+" milisegundos.");
-				//break;
+				System.out.println("Optimo alcanzado en la iteración "+i+".");//" a los "+(System.currentTimeMillis() - milisegundos)+" milisegundos.");
+				i = PUNTO_DE_CORTE;
+				break;
 			}
 		}
-		
+		System.out.println("Población Final:\n");
 		imprimir(poblacion);
 		
 		milisegundos = System.currentTimeMillis() - milisegundos;
-		System.out.println("Milisegundos Transcurridos: "+milisegundos);
+		System.out.println("\nMilisegundos Transcurridos: "+milisegundos);
 
 	}
 	
@@ -182,6 +185,8 @@ public class Main {
 	
 	public static void imprimir(boolean[] cromosoma){
 		
+		DecimalFormat df = new DecimalFormat("#.####");
+		
 		for(int i=0; i < LONGITUD_CROMOSOMA; i++){
 			if(cromosoma[i]){
 				System.out.print("1");
@@ -191,7 +196,7 @@ public class Main {
 			
 		}
 		
-		System.out.println(" Performance = "+fitness(cromosoma));
+		System.out.println(" Performance = "+df.format(fitness(cromosoma)));
 	}
 	
 	public static boolean[] generar(boolean forzarFactibilidad){
